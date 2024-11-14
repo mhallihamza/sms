@@ -22,7 +22,7 @@ function UpcomingAppointments() {
           Upcoming Appointments
         </h1>
       </div>
-      <div className="p-4 border-b border-gray-100">
+      <div className="lg:p-4 xl:p-4 border-b border-gray-100">
         <CalendarComponent
           selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}

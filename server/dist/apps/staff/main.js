@@ -177,27 +177,37 @@ exports.StaffModule = StaffModule = __decorate([
         imports: [
             config_1.ConfigModule.forRoot({
                 envFilePath: './apps/staff/.env',
+                isGlobal: true,
             }),
             typeorm_1.TypeOrmModule.forRootAsync({
                 imports: [config_1.ConfigModule],
                 useFactory: (configService) => ({
                     type: 'postgres',
                     host: configService.get('DATABASE_HOST'),
-                    port: configService.get('DATABASE_PORT'),
                     username: configService.get('DATABASE_USER'),
                     password: configService.get('DATABASE_PASSWORD'),
                     database: configService.get('DATABASE_NAME'),
                     entities: [staff_entity_1.Staff],
-                    synchronize: true,
+                    synchronize: false,
+                    migrations: [__dirname + '/migrations/*.ts'],
+                    migrationsRun: configService.get('NODE_ENV') === 'production',
+                    ssl: { require: true, rejectUnauthorized: false },
                 }),
                 inject: [config_1.ConfigService],
             }),
             typeorm_1.TypeOrmModule.forFeature([staff_entity_1.Staff]),
-            microservices_1.ClientsModule.register([
+            microservices_1.ClientsModule.registerAsync([
                 {
                     name: 'APPOINTMENT_SERVICE',
-                    transport: microservices_1.Transport.TCP,
-                    options: { host: 'localhost', port: 3004 },
+                    imports: [config_1.ConfigModule],
+                    useFactory: (configService) => ({
+                        transport: microservices_1.Transport.TCP,
+                        options: {
+                            host: configService.get('APPOINTMENTS_HOST'),
+                            port: configService.get('APPOINTMENTS_PORT', 3004),
+                        },
+                    }),
+                    inject: [config_1.ConfigService],
                 },
             ]),
         ],
@@ -383,10 +393,16 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core_1 = __webpack_require__(/*! @nestjs/core */ "@nestjs/core");
 const staff_module_1 = __webpack_require__(/*! ./staff.module */ "./apps/staff/src/staff.module.ts");
 const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 async function bootstrap() {
+    const appContext = await core_1.NestFactory.createApplicationContext(staff_module_1.StaffModule);
+    const configService = appContext.get(config_1.ConfigService);
     const app = await core_1.NestFactory.createMicroservice(staff_module_1.StaffModule, {
         transport: microservices_1.Transport.TCP,
-        options: { host: 'localhost', port: 3005 },
+        options: {
+            host: configService.get('STAFF_HOST'),
+            port: configService.get('STAFF_PORT', 3005),
+        },
     });
     await app.listen();
 }

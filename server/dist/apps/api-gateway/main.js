@@ -214,17 +214,28 @@ const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const appointments_service_1 = __webpack_require__(/*! ./appointments.service */ "./apps/api-gateway/src/appointments/appointments.service.ts");
 const appointments_controller_1 = __webpack_require__(/*! ./appointments.controller */ "./apps/api-gateway/src/appointments/appointments.controller.ts");
 const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 let AppointmentsModule = class AppointmentsModule {
 };
 exports.AppointmentsModule = AppointmentsModule;
 exports.AppointmentsModule = AppointmentsModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            microservices_1.ClientsModule.register([
+            config_1.ConfigModule.forRoot({
+                envFilePath: './apps/api-gateway/.env',
+            }),
+            microservices_1.ClientsModule.registerAsync([
                 {
                     name: 'APPOINTMENT_SERVICE',
-                    transport: microservices_1.Transport.TCP,
-                    options: { host: 'appointments', port: 3004 },
+                    imports: [config_1.ConfigModule],
+                    useFactory: (configService) => ({
+                        transport: microservices_1.Transport.TCP,
+                        options: {
+                            host: configService.get('APPOINTMENTS_HOST'),
+                            port: 3004,
+                        },
+                    }),
+                    inject: [config_1.ConfigService],
                 },
             ]),
         ],
@@ -387,22 +398,33 @@ const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const auth_controller_1 = __webpack_require__(/*! ./auth.controller */ "./apps/api-gateway/src/auth/auth.controller.ts");
 const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
 const auth_service_1 = __webpack_require__(/*! ./auth.service */ "./apps/api-gateway/src/auth/auth.service.ts");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 let AuthModule = class AuthModule {
 };
 exports.AuthModule = AuthModule;
 exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            microservices_1.ClientsModule.register([
+            config_1.ConfigModule.forRoot({
+                envFilePath: './apps/api-gateway/.env',
+            }),
+            microservices_1.ClientsModule.registerAsync([
                 {
                     name: 'AUTH_SERVICE',
-                    transport: microservices_1.Transport.TCP,
-                    options: { host: 'auth', port: 3001 },
+                    imports: [config_1.ConfigModule],
+                    useFactory: (configService) => ({
+                        transport: microservices_1.Transport.TCP,
+                        options: {
+                            host: configService.get('AUTH_HOST'),
+                            port: 3001,
+                        },
+                    }),
+                    inject: [config_1.ConfigService],
                 },
             ]),
         ],
         providers: [auth_service_1.AuthService],
-        controllers: [auth_controller_1.AuthController]
+        controllers: [auth_controller_1.AuthController],
     })
 ], AuthModule);
 
@@ -583,22 +605,33 @@ const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const customers_service_1 = __webpack_require__(/*! ./customers.service */ "./apps/api-gateway/src/customers/customers.service.ts");
 const customers_controller_1 = __webpack_require__(/*! ./customers.controller */ "./apps/api-gateway/src/customers/customers.controller.ts");
 const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 let CustomersModule = class CustomersModule {
 };
 exports.CustomersModule = CustomersModule;
 exports.CustomersModule = CustomersModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            microservices_1.ClientsModule.register([
+            config_1.ConfigModule.forRoot({
+                envFilePath: './apps/api-gateway/.env',
+            }),
+            microservices_1.ClientsModule.registerAsync([
                 {
                     name: 'CUSTOMER_SERVICE',
-                    transport: microservices_1.Transport.TCP,
-                    options: { host: 'customers', port: 3003 },
+                    imports: [config_1.ConfigModule],
+                    useFactory: (configService) => ({
+                        transport: microservices_1.Transport.TCP,
+                        options: {
+                            host: configService.get('CUSTOMERS_HOST'),
+                            port: 3003,
+                        },
+                    }),
+                    inject: [config_1.ConfigService],
                 },
             ]),
         ],
         providers: [customers_service_1.CustomersService],
-        controllers: [customers_controller_1.CustomersController]
+        controllers: [customers_controller_1.CustomersController],
     })
 ], CustomersModule);
 
@@ -803,22 +836,33 @@ const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
 const services_controller_1 = __webpack_require__(/*! ./services.controller */ "./apps/api-gateway/src/services/services.controller.ts");
 const services_service_1 = __webpack_require__(/*! ./services.service */ "./apps/api-gateway/src/services/services.service.ts");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 let ServicesModule = class ServicesModule {
 };
 exports.ServicesModule = ServicesModule;
 exports.ServicesModule = ServicesModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            microservices_1.ClientsModule.register([
+            config_1.ConfigModule.forRoot({
+                envFilePath: './apps/api-gateway/.env',
+            }),
+            microservices_1.ClientsModule.registerAsync([
                 {
                     name: 'SERVICE_SERVICE',
-                    transport: microservices_1.Transport.TCP,
-                    options: { host: 'services', port: 3006 },
+                    imports: [config_1.ConfigModule],
+                    useFactory: (configService) => ({
+                        transport: microservices_1.Transport.TCP,
+                        options: {
+                            host: configService.get('SERVICES_HOST'),
+                            port: 3006,
+                        },
+                    }),
+                    inject: [config_1.ConfigService],
                 },
             ]),
         ],
         providers: [services_service_1.ServicesService],
-        controllers: [services_controller_1.ServicesController]
+        controllers: [services_controller_1.ServicesController],
     })
 ], ServicesModule);
 
@@ -982,22 +1026,33 @@ const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
 const staff_controller_1 = __webpack_require__(/*! ./staff.controller */ "./apps/api-gateway/src/staff/staff.controller.ts");
 const staff_service_1 = __webpack_require__(/*! ./staff.service */ "./apps/api-gateway/src/staff/staff.service.ts");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 let StaffModule = class StaffModule {
 };
 exports.StaffModule = StaffModule;
 exports.StaffModule = StaffModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            microservices_1.ClientsModule.register([
+            config_1.ConfigModule.forRoot({
+                envFilePath: './apps/api-gateway/.env',
+            }),
+            microservices_1.ClientsModule.registerAsync([
                 {
                     name: 'STAFF_SERVICE',
-                    transport: microservices_1.Transport.TCP,
-                    options: { host: 'staff', port: 3005 },
+                    imports: [config_1.ConfigModule],
+                    useFactory: (configService) => ({
+                        transport: microservices_1.Transport.TCP,
+                        options: {
+                            host: configService.get('STAFF_HOST'),
+                            port: 3005,
+                        },
+                    }),
+                    inject: [config_1.ConfigService],
                 },
             ]),
         ],
         providers: [staff_service_1.StaffService],
-        controllers: [staff_controller_1.StaffController]
+        controllers: [staff_controller_1.StaffController],
     })
 ], StaffModule);
 
@@ -1160,22 +1215,33 @@ const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
 const treatments_controller_1 = __webpack_require__(/*! ./treatments.controller */ "./apps/api-gateway/src/treatments/treatments.controller.ts");
 const treatments_service_1 = __webpack_require__(/*! ./treatments.service */ "./apps/api-gateway/src/treatments/treatments.service.ts");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 let TreatmentsModule = class TreatmentsModule {
 };
 exports.TreatmentsModule = TreatmentsModule;
 exports.TreatmentsModule = TreatmentsModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            microservices_1.ClientsModule.register([
+            config_1.ConfigModule.forRoot({
+                envFilePath: './apps/api-gateway/.env',
+            }),
+            microservices_1.ClientsModule.registerAsync([
                 {
                     name: 'TREATMENT_SERVICE',
-                    transport: microservices_1.Transport.TCP,
-                    options: { host: 'treatments', port: 3007 },
+                    imports: [config_1.ConfigModule],
+                    useFactory: (configService) => ({
+                        transport: microservices_1.Transport.TCP,
+                        options: {
+                            host: configService.get('TREATMENTS_HOST'),
+                            port: 3007,
+                        },
+                    }),
+                    inject: [config_1.ConfigService],
                 },
             ]),
         ],
         providers: [treatments_service_1.TreatmentsService],
-        controllers: [treatments_controller_1.TreatmentsController]
+        controllers: [treatments_controller_1.TreatmentsController],
     })
 ], TreatmentsModule);
 
@@ -1355,22 +1421,33 @@ const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const users_service_1 = __webpack_require__(/*! ./users.service */ "./apps/api-gateway/src/users/users.service.ts");
 const users_controller_1 = __webpack_require__(/*! ./users.controller */ "./apps/api-gateway/src/users/users.controller.ts");
 const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 let UsersModule = class UsersModule {
 };
 exports.UsersModule = UsersModule;
 exports.UsersModule = UsersModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            microservices_1.ClientsModule.register([
+            config_1.ConfigModule.forRoot({
+                envFilePath: './apps/api-gateway/.env',
+            }),
+            microservices_1.ClientsModule.registerAsync([
                 {
                     name: 'USER_SERVICE',
-                    transport: microservices_1.Transport.TCP,
-                    options: { host: 'users', port: 3002 },
+                    imports: [config_1.ConfigModule],
+                    useFactory: (configService) => ({
+                        transport: microservices_1.Transport.TCP,
+                        options: {
+                            host: configService.get('USERS_HOST'),
+                            port: 3002,
+                        },
+                    }),
+                    inject: [config_1.ConfigService],
                 },
             ]),
         ],
         providers: [users_service_1.UsersService],
-        controllers: [users_controller_1.UsersController]
+        controllers: [users_controller_1.UsersController],
     })
 ], UsersModule);
 
@@ -1436,6 +1513,16 @@ exports.UsersService = UsersService = __decorate([
 /***/ ((module) => {
 
 module.exports = require("@nestjs/common");
+
+/***/ }),
+
+/***/ "@nestjs/config":
+/*!*********************************!*\
+  !*** external "@nestjs/config" ***!
+  \*********************************/
+/***/ ((module) => {
+
+module.exports = require("@nestjs/config");
 
 /***/ }),
 
@@ -1509,7 +1596,11 @@ const core_1 = __webpack_require__(/*! @nestjs/core */ "@nestjs/core");
 const api_gateway_module_1 = __webpack_require__(/*! ./api-gateway.module */ "./apps/api-gateway/src/api-gateway.module.ts");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(api_gateway_module_1.ApiGatewayModule);
-    app.enableCors();
+    app.enableCors({
+        origin: '*',
+        methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+        credentials: true,
+    });
     await app.listen(3000);
 }
 bootstrap();

@@ -125,8 +125,8 @@ function Appointments() {
             {successMessage}
           </div>
         )}
-        <div className="my-4 relative">
-          <table className="w-full">
+        <div className="my-4 relative overflow-x-auto">
+          <table className="lg:w-[45rem] xl:w-full">
             <thead className="text-xs font-medium font-poppins">
               <tr>
                 <th className="px-2">
@@ -137,7 +137,9 @@ function Appointments() {
                   ></input>
                 </th>
                 <th className="font-semibold py-3 pl-3 text-left">Date</th>
-                <th className="font-semibold py-3 pl-3 text-left">Customer</th>
+                <th className="font-semibold py-3 pl-3 text-left">
+                  Customer
+                </th>
                 <th className="font-semibold py-3 pl-3 text-left">Staff</th>
                 <th className="font-semibold py-3 pl-3 text-left">Service</th>
                 <th className="font-semibold py-3 pl-3 text-left w-28">
@@ -167,7 +169,7 @@ function Appointments() {
                         type="checkbox"
                       ></input>
                     </td>
-                    <td className="pl-3 py-3">{`${
+                    <td className="pl-3 py-3 whitespace-nowrap">{`${
                       months[new Date(appointment.appointmentDate).getMonth()]
                     } ${new Date(
                       appointment.appointmentDate
@@ -196,7 +198,7 @@ function Appointments() {
                             )?.profilePicture
                           }
                         ></img>
-                        <div>{`${
+                        <div className="whitespace-nowrap">{`${
                           staff.find((el) => el.staffId === appointment.staffId)
                             ?.firstName
                         } ${
@@ -205,7 +207,7 @@ function Appointments() {
                         }`}</div>
                       </div>
                     </td>
-                    <td className="pl-3 py-3">
+                    <td className="pl-3 py-3 whitespace-nowrap">
                       {
                         services.find(
                           (el) => el.serviceId === appointment.serviceId

@@ -142,30 +142,40 @@ exports.AuthModule = AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot({
-                envFilePath: './apps/auth/.env'
+                envFilePath: './apps/auth/.env',
+                isGlobal: true,
             }),
             typeorm_1.TypeOrmModule.forRootAsync({
                 imports: [config_1.ConfigModule],
                 useFactory: (configService) => ({
                     type: 'postgres',
                     host: configService.get('DATABASE_HOST'),
-                    port: configService.get('DATABASE_PORT'),
                     username: configService.get('DATABASE_USER'),
                     password: configService.get('DATABASE_PASSWORD'),
                     database: configService.get('DATABASE_NAME'),
                     entities: [auth_user_entity_1.AuthUser],
-                    synchronize: true,
+                    synchronize: false,
+                    migrations: [__dirname + '/migrations/*.ts'],
+                    migrationsRun: configService.get('NODE_ENV') === 'production',
+                    ssl: { require: true, rejectUnauthorized: false },
                 }),
                 inject: [config_1.ConfigService],
             }),
             typeorm_1.TypeOrmModule.forFeature([auth_user_entity_1.AuthUser]),
-            microservices_1.ClientsModule.register([
+            microservices_1.ClientsModule.registerAsync([
                 {
                     name: 'USER_SERVICE',
-                    transport: microservices_1.Transport.TCP,
-                    options: { host: 'users', port: 3002 },
+                    imports: [config_1.ConfigModule],
+                    inject: [config_1.ConfigService],
+                    useFactory: (configService) => ({
+                        transport: microservices_1.Transport.TCP,
+                        options: {
+                            host: configService.get('USERS_HOST'),
+                            port: 3002,
+                        },
+                    }),
                 },
-            ])
+            ]),
         ],
         controllers: [auth_controller_1.AuthController],
         providers: [auth_service_1.AuthService],
@@ -372,10 +382,15 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core_1 = __webpack_require__(/*! @nestjs/core */ "@nestjs/core");
 const auth_module_1 = __webpack_require__(/*! ./auth.module */ "./apps/auth/src/auth.module.ts");
 const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 async function bootstrap() {
+    const appContext = await core_1.NestFactory.createApplicationContext(auth_module_1.AuthModule);
+    const configService = appContext.get(config_1.ConfigService);
+    const host = configService.get('AUTH_HOST');
+    const port = configService.get('AUTH_PORT', 3001);
     const app = await core_1.NestFactory.createMicroservice(auth_module_1.AuthModule, {
         transport: microservices_1.Transport.TCP,
-        options: { host: 'auth', port: 3001 },
+        options: { host, port },
     });
     await app.listen();
 }

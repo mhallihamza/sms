@@ -78,7 +78,7 @@ function Treatments() {
           {successMessage}
         </div>
       )}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 xl:gap-8">
         {treatments &&
           treatments.map((treatment) => (
             <div
@@ -94,7 +94,7 @@ function Treatments() {
                 </button>
               </div>
               {isMenuOpen && treatment.treatmentId === activeItemId && (
-                <div className="absolute font-poppins text-sm right-14 top-10 bg-white border w-36 flex flex-col rounded-md">
+                <div className="absolute font-poppins text-sm right-14 top-10 bg-white border w-24 xl:w-36 flex flex-col rounded-md">
                   <button className="border-b py-1 rounded-t-md hover:bg-gray-400">
                     Edit
                   </button>
@@ -122,8 +122,8 @@ function Treatments() {
                   ?.name
               }`}</p>
               <p className="text-sm text-gray-600 mb-2">{`Price: $${treatment.price}`}</p>
-              <button className="w-full py-1.5 bg-blue-600 text-white rounded-lg text-xs hover:bg-blue-700 transition">
-                Book Now
+              <button className="w-full py-1.5 bg-green-600 text-white rounded-lg text-xs hover:bg-green-700 transition">
+                Active
               </button>
             </div>
           ))}

@@ -55,11 +55,11 @@ function ServiceChart() {
           <div className="p-1 border-red-200 border-b-2">Products</div>
           <div className="p-1 border-red-200 border-b-2">Treatments</div>
         </div>
-        <div className="mt-4">
-          <ResponsiveContainer width={400} height={250}>
+        <div className="mt-4 xl:h-64 xl:w-full">
+          <ResponsiveContainer width='100%' height='100%'>
             <LineChart
               data={finalData}
-              margin={{ top: 25, right: 55, left: -50, bottom: 5 }} // Adjust left margin for space
+              margin={{ top: 25, right: 12, left: -50, bottom: 5 }} // Adjust left margin for space
             >
               <XAxis
                 dataKey="month"

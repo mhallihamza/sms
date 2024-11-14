@@ -131,7 +131,7 @@ function Staff() {
           <IoIosArrowForward />
         </button>
       </div>
-      <div className="my-4 relative">
+      <div className="my-4 relative overflow-x-auto">
         <table className="w-full">
           <thead className="text-xs font-medium font-poppins">
             <tr>
@@ -144,8 +144,8 @@ function Staff() {
                 ></input>
               </th>
               <th className="font-semibold py-3 pl-3 text-left">Photo</th>
-              <th className="font-semibold py-3 pl-3 text-left">First Name</th>
-              <th className="font-semibold py-3 pl-3 text-left">Last Name</th>
+              <th className="font-semibold whitespace-nowrap py-3 pl-3 text-left">First Name</th>
+              <th className="font-semibold whitespace-nowrap py-3 pl-3 text-left">Last Name</th>
               <th className="font-semibold py-3 pl-3 text-left">Mobile</th>
               <th className="font-semibold py-3 pl-3 text-left">Email</th>
               <th className="font-semibold py-3 pl-3 text-left">Position</th>

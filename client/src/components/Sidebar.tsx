@@ -28,7 +28,7 @@ function Sidebar() {
   if(user) {
   return (
     <div className="flex min-h-screen gap-3 px-3">
-      <div className="h-screen sticky z-20 top-0 inset-x-0 w-[15%] py-3">
+      <div className="h-screen sticky z-20 top-0 inset-x-0 lg:w-[18%] xl:w-[15%] py-3">
         <div className="bg-[#fbfcfc] overflow-auto font-medium h-full text-sm border-gray-200 border rounded-lg">
           <img className="h-20 w-20 ml-3 mb-3" src="/images/logo.png"></img>
           <ul>
@@ -171,7 +171,7 @@ function Sidebar() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col w-[85%]">
+      <div className="flex flex-col lg:w-[82%] xl:w-[85%]">
         <div className="flex bg-white z-10 sticky pb-5 pt-3 top-0 inset-x-0 font-medium text-sm justify-between">
           <div className="flex gap-4">
             <button className="bg-[#f6f8f8] border-gray-200 border px-3 py-1 rounded">
@@ -233,10 +233,10 @@ function Sidebar() {
           </div>
         </div>
         <div className="flex flex-1 gap-3 pb-3">
-          <div className=" bg-[#fbfcfc] relative px-4 py-4 w-[75%] rounded-lg font-medium border-gray-200 border">
+          <div className=" bg-[#fbfcfc] relative px-4 py-4 lg:w-[72%] min-[1150px]:w-[75%] rounded-lg font-medium border-gray-200 border">
             <Outlet />
           </div>
-          <div className="bg-[#fbfcfc] border border-gray-200 w-[25%] rounded-lg">
+          <div className="bg-[#fbfcfc] border border-gray-200 lg:w-[28%] min-[1150px]:w-[25%] rounded-lg">
             <UpcomingAppointments />
           </div>
         </div>

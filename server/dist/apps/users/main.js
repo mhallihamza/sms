@@ -175,19 +175,21 @@ exports.UsersModule = UsersModule = __decorate([
     (0, common_1.Module)({
         imports: [
             config_1.ConfigModule.forRoot({
-                envFilePath: './apps/users/.env'
+                envFilePath: './apps/users/.env',
             }),
             typeorm_1.TypeOrmModule.forRootAsync({
                 imports: [config_1.ConfigModule],
                 useFactory: (configService) => ({
                     type: 'postgres',
                     host: configService.get('DATABASE_HOST'),
-                    port: configService.get('DATABASE_PORT'),
-                    username: 'postgres',
-                    password: '123456',
+                    username: configService.get('DATABASE_USER'),
+                    password: configService.get('DATABASE_PASSWORD'),
                     database: configService.get('DATABASE_NAME'),
                     entities: [user_entity_1.User],
-                    synchronize: true,
+                    synchronize: false,
+                    migrations: [__dirname + '/migrations/*.ts'],
+                    migrationsRun: configService.get('NODE_ENV') === 'production',
+                    ssl: { require: true, rejectUnauthorized: false },
                 }),
                 inject: [config_1.ConfigService],
             }),
@@ -227,7 +229,7 @@ const common_1 = __webpack_require__(/*! @nestjs/common */ "@nestjs/common");
 const typeorm_1 = __webpack_require__(/*! @nestjs/typeorm */ "@nestjs/typeorm");
 const typeorm_2 = __webpack_require__(/*! typeorm */ "typeorm");
 const user_entity_1 = __webpack_require__(/*! ./user.entity */ "./apps/users/src/user.entity.ts");
-const bcrypt = __webpack_require__(/*! bcrypt */ "bcrypt");
+const bcrypt = __webpack_require__(/*! bcryptjs */ "bcryptjs");
 let UsersService = class UsersService {
     constructor(userRepository) {
         this.userRepository = userRepository;
@@ -328,13 +330,13 @@ module.exports = require("@nestjs/typeorm");
 
 /***/ }),
 
-/***/ "bcrypt":
-/*!*************************!*\
-  !*** external "bcrypt" ***!
-  \*************************/
+/***/ "bcryptjs":
+/*!***************************!*\
+  !*** external "bcryptjs" ***!
+  \***************************/
 /***/ ((module) => {
 
-module.exports = require("bcrypt");
+module.exports = require("bcryptjs");
 
 /***/ }),
 
@@ -387,10 +389,16 @@ Object.defineProperty(exports, "__esModule", ({ value: true }));
 const core_1 = __webpack_require__(/*! @nestjs/core */ "@nestjs/core");
 const users_module_1 = __webpack_require__(/*! ./users.module */ "./apps/users/src/users.module.ts");
 const microservices_1 = __webpack_require__(/*! @nestjs/microservices */ "@nestjs/microservices");
+const config_1 = __webpack_require__(/*! @nestjs/config */ "@nestjs/config");
 async function bootstrap() {
+    const appContext = await core_1.NestFactory.createApplicationContext(users_module_1.UsersModule);
+    const configService = appContext.get(config_1.ConfigService);
     const app = await core_1.NestFactory.createMicroservice(users_module_1.UsersModule, {
         transport: microservices_1.Transport.TCP,
-        options: { host: 'localhost', port: 3002 },
+        options: {
+            host: configService.get('USERS_HOST'),
+            port: configService.get('USERS_PORT', 3002),
+        },
     });
     await app.listen();
 }

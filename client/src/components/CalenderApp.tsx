@@ -78,12 +78,12 @@ function CalenderApp({
       </div>
 
       {/* Display days of the week */}
-      <div className="flex mt-4 text-gray-400 font-semibold font-poppins text-xs">
+      <div className="flex gap-0.5 mt-4 text-gray-400 font-semibold justify-center font-poppins text-xs">
         {weekDays.map((day, index) => (
           <button
             key={index}
             onClick={() => handleDateClick(day)}
-            className={`flex py-1 rounded px-1.5 flex-col gap-1 items-center hover:bg-orange-500 hover:text-white 
+            className={`flex py-1 rounded lg:px-[3px] xl:px-[5px] 2xl:px-1.5 flex-col gap-1 items-center hover:bg-orange-500 hover:text-white 
               ${
                 day.toDateString() === selectedDate.toDateString()
                   ? "bg-orange-500 text-white"

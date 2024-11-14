@@ -131,7 +131,7 @@ function Customers() {
           <IoIosArrowForward />
         </button>
       </div>
-      <div className="my-4 relative">
+      <div className="my-4 relative overflow-x-auto">
         <table className="w-full">
           <thead className="text-xs font-medium font-poppins">
             <tr>
@@ -146,8 +146,8 @@ function Customers() {
               <th className="font-semibold py-3 pl-3 text-left w-[6rem]">
                 Photo
               </th>
-              <th className="font-semibold py-3 pl-3 text-left">First Name</th>
-              <th className="font-semibold py-3 pl-3 text-left">Last Name</th>
+              <th className="font-semibold whitespace-nowrap py-3 pl-3 text-left">First Name</th>
+              <th className="font-semibold whitespace-nowrap py-3 pl-3 text-left">Last Name</th>
               <th className="font-semibold py-3 pl-3 text-left">Mobile</th>
               <th className="font-semibold py-3 pl-3 text-left">Email</th>
               <th className="font-semibold py-3 pl-3 text-left">Loyalty</th>
@@ -210,7 +210,7 @@ function Customers() {
                         >
                           <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 13H7v-2h10v2z"></path>
                         </svg>
-                        <span className="text-red-600 font-medium">
+                        <span className="text-red-600 font-medium whitespace-nowrap">
                           Not Loyal
                         </span>
                       </div>
