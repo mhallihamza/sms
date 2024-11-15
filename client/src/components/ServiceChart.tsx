@@ -55,7 +55,7 @@ function ServiceChart() {
           <div className="p-1 border-red-200 border-b-2">Products</div>
           <div className="p-1 border-red-200 border-b-2">Treatments</div>
         </div>
-        <div className="mt-4 xl:h-64 xl:w-full">
+        <div className="mt-4 h-64 w-full">
           <ResponsiveContainer width='100%' height='100%'>
             <LineChart
               data={finalData}
