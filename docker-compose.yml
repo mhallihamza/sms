@@ -16,7 +16,7 @@ services:
     image: mhallihamza/sms_api-gateway
     container_name: api-gateway
     ports:
-      - '3000'
+      - '3000:3000'
     networks:
       - app-network
   
