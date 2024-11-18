@@ -16,6 +16,9 @@ FROM nginx:alpine
 # Copy the React build from Stage 1 to the Nginx HTML directory
 COPY --from=builder /app/dist /usr/share/nginx/html
 
+# Add custom Nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Expose port 80
 EXPOSE 80
 
