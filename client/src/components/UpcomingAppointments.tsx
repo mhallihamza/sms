@@ -15,6 +15,30 @@ function UpcomingAppointments() {
     (appointment) =>
       appointment.appointmentDate === selectedDate.toISOString().split("T")[0]
   );
+  function calculateEndTime(startTime: any, duration: any) {
+    // Parse the start time
+    const [startHours, startMinutes] = startTime.split(":").map(Number);
+
+    // Convert duration to hours and minutes
+    const durationHours = Math.floor(duration / 60);
+    const durationMinutes = duration % 60;
+
+    // Calculate total hours and minutes
+    let endHours = startHours + durationHours;
+    let endMinutes = startMinutes + durationMinutes;
+
+    // Handle overflow for minutes
+    if (endMinutes >= 60) {
+      endMinutes -= 60;
+      endHours += 1;
+    }
+
+    // Format end time as hh:mm
+    return `${String(endHours).padStart(2, "0")}:${String(endMinutes).padStart(
+      2,
+      "0"
+    )}`;
+  }
   return (
     <div className="text-black">
       <div className="p-4 border-b border-gray-100">
@@ -50,7 +74,7 @@ function UpcomingAppointments() {
                     }
                   </p>
                   <div className="text-xs font-medium font-poppins text-gray-400">
-                    10:00 - 11:00
+                    {calculateEndTime(appointment.startTime, appointment.treatment.duration)}
                   </div>
                 </div>
               </div>

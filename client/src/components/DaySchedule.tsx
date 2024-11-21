@@ -112,7 +112,7 @@ function DaySchedule() {
                   .map((event) => (
                     <div
                       key={event.appointmentId}
-                      className="absolute bg-opacity-100 border-[2px] left-0 right-0 bg-red-200 rounded-md flex items-center text-xs px-2"
+                      className="absolute bg-opacity-100 border-[2px] left-0 right-0 bg-red-200 rounded-md flex items-center text-[8px] xl:text-xs px-2"
                       style={{
                         ...getEventStyle(
                           event.startTime,
