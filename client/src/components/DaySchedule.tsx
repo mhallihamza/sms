@@ -49,7 +49,7 @@ function DaySchedule() {
     const startHour =
       parseInt(start.split(":")[0]) + parseInt(start.split(":")[1]);
     const endHour = startHour + end/60;
-    const top = (startHour - 8) * 2.5; // Each hour slot has a height of 2rem
+    const top = (startHour - 9) * 2.5; // Each hour slot has a height of 2rem
     const height = (endHour - startHour) * 2.5;
 
     return { top: `${top}rem`, height: `${height}rem` };

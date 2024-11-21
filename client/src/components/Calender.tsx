@@ -47,7 +47,7 @@ function Calendar() {
     const startHour =
       parseInt(start.split(":")[0]) + parseInt(start.split(":")[1]);
     const endHour = startHour + end / 60;
-    const top = (startHour - 8) * 4; // Each hour slot has a height of 4rem
+    const top = (startHour - 9) * 4; // Each hour slot has a height of 4rem
     const height = (endHour - startHour) * 4;
 
     return { top: `${top}rem`, height: `${height}rem` };
