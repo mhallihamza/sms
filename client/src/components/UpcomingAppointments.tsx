@@ -74,7 +74,7 @@ function UpcomingAppointments() {
                     }
                   </p>
                   <div className="text-xs font-medium font-poppins text-gray-400">
-                    {calculateEndTime(appointment.startTime, appointment.treatment.duration)}
+                    {`${appointment.startTime} : ${calculateEndTime(appointment.startTime, appointment.treatment.duration)}`}
                   </div>
                 </div>
               </div>
